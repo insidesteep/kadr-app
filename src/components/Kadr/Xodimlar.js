@@ -169,8 +169,12 @@ const Xodimlar = () => {
   ];
 
   const [visible, setVisible] = useState(false)
+  const [visibleExtra, setVisibleExtra] = useState(false)
+
   const openModal = () => setVisible(true)
   const closeModal = () => setVisible(false)
+  const openExtraModal = () => setVisibleExtra(true)
+  const closeExtraModal = () => setVisibleExtra(false)
 
   return (
     <div className="card" style={{ padding: "50px" }}>

@@ -8,29 +8,47 @@ import {
   Divider,
   Row,
   Col,
-  DatePicker
+  DatePicker,
+  InputNumber
 } from "antd";
 import UploadAvatar from "./UploadAvatar";
 import locale from '../../utils/locale/uz_UZB'
 
 const CreateEmployee = ({ visible, title, handleCancel }) => {
+  const [bulim, setBulim] = useState("")
+  const [lavozim, setLavozim] = useState("")
   const [holatValue, setHolat] = useState(1);
+  const [pinfl, setPinfl] = useState("")
+  const [xissa, setXissa] = useState(0)
+  const [photo, setPhoto] = useState(null)
+  const [passport, setPassport] = useState("")
+  const [lastname, setLastname] = useState("")
+  const [name, setName] = useState("")
+  const [patronymic, setPatronymic] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+
+
+
+
   const { Option } = Select;
+
   const changeHolat = e => setHolat(e.target.value);
+  const changeBulim = value => setBulim(value)
 
   return (
     <Modal
       title={title}
       visible={visible}
-      onOk={() => {}}
+      onOk={() => { }}
       onCancel={handleCancel}
-      width="40%"
+      width="50%"
     >
       <Form>
         <Row gutter={24}>
           <Col span={14}>
             <Form.Item label="Bo'lim / Kafedra">
-              <Select>
+              <Select onChange={changeBulim} placeholder="Bulim yoki kafedrani tanlang">
                 <Option value="86">+86</Option>
                 <Option value="87">+87</Option>
               </Select>
@@ -38,7 +56,7 @@ const CreateEmployee = ({ visible, title, handleCancel }) => {
           </Col>
           <Col span={10}>
             <Form.Item label="Lavozim">
-              <Select>
+              <Select placeholder="Lavozimni tanlang">
                 <Option value="86">+86</Option>
                 <Option value="87">+87</Option>
               </Select>
@@ -56,9 +74,18 @@ const CreateEmployee = ({ visible, title, handleCancel }) => {
             </Form.Item>
           </Col>
           <Col span={10}>
-            <Form.Item label="PINFL">
-              <Input type="number" />
-            </Form.Item>
+            <Row gutter={24}>
+              <Col span={14}>
+                <Form.Item label="JSHSHIR">
+                  <InputNumber maxLength={14} style={{ width: "160px" }} />
+                </Form.Item>
+              </Col>
+              <Col span={10}>
+                <Form.Item label="Xissa">
+                  <InputNumber />
+                </Form.Item>
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Divider />
@@ -89,7 +116,7 @@ const CreateEmployee = ({ visible, title, handleCancel }) => {
                       </Col>
                       <Col>
                         <Form.Item label="Amal qilish muddati">
-                          <DatePicker />
+                          <DatePicker locale={locale} />
                         </Form.Item>
                       </Col>
                     </Row>

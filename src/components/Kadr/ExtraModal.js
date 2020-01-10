@@ -13,7 +13,7 @@ const ExtraModal = () => {
   return (
     <Modal
       title="Qo'shimcha ma'lumotlar"
-      visible={true}
+      visible={false}
       onOk={() => {}}
       onCancel={() => {}}
       width="70%"
