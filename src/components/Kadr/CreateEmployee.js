@@ -14,7 +14,7 @@ import {
 import UploadAvatar from "./UploadAvatar";
 import locale from '../../utils/locale/uz_UZB'
 
-const CreateEmployee = ({ visible, title, handleCancel }) => {
+const CreateEmployee = ({ visible, title, handleCancel, setVisible, setVisibleExtra }) => {
   const [bulim, setBulim] = useState("")
   const [lavozim, setLavozim] = useState("")
   const [holatValue, setHolat] = useState(1);
@@ -35,12 +35,17 @@ const CreateEmployee = ({ visible, title, handleCancel }) => {
 
   const changeHolat = e => setHolat(e.target.value);
   const changeBulim = value => setBulim(value)
+  const save = () => {
+    setVisible(false)
+    setVisibleExtra(true)
+  }
+
 
   return (
     <Modal
       title={title}
       visible={visible}
-      onOk={() => { }}
+      onOk={save}
       onCancel={handleCancel}
       width="50%"
     >

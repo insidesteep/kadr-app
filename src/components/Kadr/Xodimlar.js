@@ -188,8 +188,8 @@ const Xodimlar = () => {
         scroll={{ x: 1500, y: 300 }}
         locale={{ filterReset: "Сброс" }}
       />
-      <CreateEmployee visible={visible} handleCancel={closeModal} title="Yangi xodim yaratish"/>
-      <ExtraModal />
+      <CreateEmployee visible={visible} handleCancel={closeModal} title="Yangi xodim yaratish" setVisible={setVisible} setVisibleExtra={setVisibleExtra} />
+      <ExtraModal visible={visibleExtra}/>
     </div>
   );
 };

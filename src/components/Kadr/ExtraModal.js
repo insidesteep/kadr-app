@@ -9,11 +9,11 @@ function callback(key) {
   console.log(key);
 }
 
-const ExtraModal = () => {
+const ExtraModal = ({ visible }) => {
   return (
     <Modal
       title="Qo'shimcha ma'lumotlar"
-      visible={false}
+      visible={visible}
       onOk={() => {}}
       onCancel={() => {}}
       width="70%"
