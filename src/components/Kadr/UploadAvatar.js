@@ -56,6 +56,7 @@ class Avatar extends React.Component {
       </div>
     );
     const { imageUrl } = this.state;
+    console.log(imageUrl)
     return (
       <StyledUpload
         name="avatar"

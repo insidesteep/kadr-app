@@ -53,7 +53,7 @@ const CreateEmployee = ({ visible, title, handleCancel, setVisible, setVisibleEx
         <Row gutter={24}>
           <Col span={14}>
             <Form.Item label="Bo'lim / Kafedra">
-              <Select onChange={changeBulim} placeholder="Bulim yoki kafedrani tanlang">
+              <Select onChange={changeBulim} placeholder="Bo'lim yoki kafedrani tanlang">
                 <Option value="86">+86</Option>
                 <Option value="87">+87</Option>
               </Select>
