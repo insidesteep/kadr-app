@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Input,
@@ -13,6 +13,12 @@ import {
 } from "antd";
 import UploadAvatar from "./UploadAvatar";
 import locale from '../../utils/locale/uz_UZB'
+import moment from "moment"
+import momentFr from 'moment/locale/uz-latn'
+
+moment.locale("uz-latn", momentFr)
+
+
 
 const CreateEmployee = ({ visible, title, handleCancel, setVisible, setVisibleExtra }) => {
   const [bulim, setBulim] = useState("")
@@ -29,8 +35,6 @@ const CreateEmployee = ({ visible, title, handleCancel, setVisible, setVisibleEx
   const [endDate, setEndDate] = useState("")
 
 
-
-
   const { Option } = Select;
 
   const changeHolat = e => setHolat(e.target.value);
@@ -40,6 +44,63 @@ const CreateEmployee = ({ visible, title, handleCancel, setVisible, setVisibleEx
     setVisibleExtra(true)
   }
 
+
+  const renderAsosiy = () => (<Row gutter={24}>
+    <Col span={14}>
+      <Row>
+        <Col>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Row>
+                <Form.Item label="Rasmi">
+                  <UploadAvatar />
+                </Form.Item>
+              </Row>
+            </Col>
+            <Col span={12}>
+              <Row>
+                <Col>
+                  <Form.Item label="Pasport seriyasi">
+                    <Input style={{ width: "25%", marginRight: "2%" }} />
+                    <Input style={{ width: "73%" }} />
+                  </Form.Item>
+                </Col>
+                <Col>
+                  <Form.Item label="Berilgan sana">
+                    <DatePicker locale={locale} />
+                  </Form.Item>
+                </Col>
+                <Col>
+                  <Form.Item label="Amal qilish muddati">
+                    <DatePicker locale={locale} />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Col>
+    <Col span={10}>
+      <Row>
+        <Col>
+          <Form.Item label="Familiyasi">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col>
+          <Form.Item label="Ismi">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col>
+          <Form.Item label="Otasining ismi">
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+    </Col>
+  </Row>)
 
   return (
     <Modal
@@ -94,62 +155,9 @@ const CreateEmployee = ({ visible, title, handleCancel, setVisible, setVisibleEx
           </Col>
         </Row>
         <Divider />
-        <Row gutter={24}>
-          <Col span={14}>
-            <Row>
-              <Col>
-                <Row gutter={24}>
-                  <Col span={12}>
-                    <Row>
-                      <Form.Item label="Rasmi">
-                        <UploadAvatar />
-                      </Form.Item>
-                    </Row>
-                  </Col>
-                  <Col span={12}>
-                    <Row>
-                      <Col>
-                        <Form.Item label="Pasport seriyasi">
-                          <Input style={{ width: "25%", marginRight: "2%" }} />
-                          <Input style={{ width: "73%" }} />
-                        </Form.Item>
-                      </Col>
-                      <Col>
-                        <Form.Item label="Berilgan sana">
-                          <DatePicker locale={locale} />
-                        </Form.Item>
-                      </Col>
-                      <Col>
-                        <Form.Item label="Amal qilish muddati">
-                          <DatePicker locale={locale} />
-                        </Form.Item>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-          <Col span={10}>
-            <Row>
-              <Col>
-                <Form.Item label="Familiyasi">
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col>
-                <Form.Item label="Ismi">
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col>
-                <Form.Item label="Otasining ismi">
-                  <Input />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        {
+          holatValue !== 3 && renderAsosiy()
+        }
         {/* 
         
        <Col span={12}>

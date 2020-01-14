@@ -24,7 +24,10 @@ import {
   SET_UPLOAD_PROGRESS,
   SHOW_MODAL,
   HIDE_MODAL,
-  CREATE_BULIM
+  CREATE_BULIM,
+  FETCH_BULIMLAR_START,
+  FETCH_BULIMLAR_SUCCESS,
+  FETCH_BULIMLAR_FAILURE
 } from "../constants";
 
 import axios from "axios";
@@ -167,7 +170,7 @@ export function setUploadProgress(percent) {
 export function addBook(book) {
   return dispatch => {
     const config = {
-      onUploadProgress: function(progressEvent) {
+      onUploadProgress: function (progressEvent) {
         const percent = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total
         );
@@ -180,13 +183,13 @@ export function addBook(book) {
     });
     axios
       .post("file_upload_parser.php", book, config)
-      .then(function(res) {
+      .then(function (res) {
         dispatch({
           type: ADD_BOOK_SUCCESS
         });
         console.log("SEND");
       })
-      .catch(function(err) {
+      .catch(function (err) {
         dispatch({
           type: ADD_BOOK_FAILURE
         });
@@ -241,6 +244,30 @@ export function hideModal() {
 
 let id = 562;
 
+
+export function fetchBulimlar() {
+  return dispatch => {
+
+    dispatch({
+      type: FETCH_BULIMLAR_START
+    });
+    axios
+      .get("file_upload_parser.php")
+      .then(function (res) {
+        dispatch({
+          type: FETCH_BULIMLAR_SUCCESS
+        });
+        console.log("SEND");
+      })
+      .catch(function (err) {
+        dispatch({
+          type: FETCH_BULIMLAR_FAILURE
+        });
+        console.log("ERROR");
+      });
+  };
+}
+
 export function createBulim(data) {
   console.log("data", data)
   return {
@@ -254,7 +281,7 @@ export function createBulim(data) {
   }
 }
 
-export function createInlineBulim(bulim, inlineBulim){
+export function createInlineBulim(bulim, inlineBulim) {
 
   return {
     type: CREATE_BULIM,

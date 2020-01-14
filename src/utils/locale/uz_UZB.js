@@ -2,7 +2,7 @@ export default {
   "lang": {
     "placeholder": "Sanani tanlang",
     "rangePlaceholder": ["Start date", "End date"],
-    "today": "Today",
+    "today": "Bugun",
     "now": "Now",
     "backToToday": "Back to today",
     "ok": "Ok",
@@ -11,8 +11,8 @@ export default {
     "year": "Year",
     "timeSelect": "Select time",
     "dateSelect": "Select date",
-    "monthSelect": "Choose a month",
-    "yearSelect": "Choose a year",
+    "monthSelect": "Oyni tanlang",
+    "yearSelect": "Yilni tanlang",
     "decadeSelect": "Choose a decade",
     "yearFormat": "YYYY",
     "dateFormat": "M/D/YYYY",
@@ -20,17 +20,17 @@ export default {
     "dateTimeFormat": "M/D/YYYY HH:mm:ss",
     "monthFormat": "MMMM",
     "monthBeforeYear": true,
-    "previousMonth": "Previous month (PageUp)",
-    "nextMonth": "Next month (PageDown)",
-    "previousYear": "Last year (Control + left)",
-    "nextYear": "Next year (Control + right)",
+    "previousMonth": "O'tgan oy (PageUp)",
+    "nextMonth": "Keyingi oy (PageDown)",
+    "previousYear": "O'tgan yil (Control + left)",
+    "nextYear": "Keyingi yil (Control + right)",
     "previousDecade": "Last decade",
     "nextDecade": "Next decade",
     "previousCentury": "Last century",
     "nextCentury": "Next century"
   },
   "timePickerLocale": {
-    "placeholder": "Select time"
+    "placeholder": "Vaqtni tanlang"
   },
   "dateFormat": "YYYY-MM-DD",
   "dateTimeFormat": "YYYY-MM-DD HH:mm:ss",

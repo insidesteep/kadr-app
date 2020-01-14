@@ -1,117 +1,48 @@
-import { CREATE_BULIM, CREATE_INLINE_BULIM } from "../constants";
+import { FETCH_BULIMLAR_START, FETCH_BULIMLAR_SUCCESS, FETCH_BULIMLAR_FAILURE } from "../constants";
 
 const initialState = {
   data: [
     {
       key: `771`,
-      name: `Axborot texnologiyalari markazi`,
-      shtat: 32,
-      band: 25,
-      qoldiq: 7,
-      children: [
-        {
-          key: "1115",
-          name: "Axborot xafsizligi",
-          shtat: 13,
-          band: 25,
-          qoldiq: 7,
-          children: [
-            {
-              key: "2651",
-              name: "Dasturchi",
-              shtat: 42,
-              band: 14,
-              qoldiq: 7
-            }
-          ]
-        }
-      ]
+      name: `Axborot texnologiyalari markazi`
     },
     {
-      key: `232`,
-      name: `Hisobxona`,
-      shtat: 42,
-      band: 25,
-      qoldiq: 7,
-      children: [
-        {
-          key: `72`,
-          name: `Xodim`,
-          shtat: 23,
-          band: 14,
-          qoldiq: 7
-        }
-      ]
+      key: `2771`,
+      name: `Hisobxona`
     },
     {
-      key: `31`,
-      name: `Arxiv`,
-      shtat: 32,
-      band: 25,
-      qoldiq: 7,
-      children: [
-        {
-          key: `62`,
-          name: `Xodim`,
-          shtat: 23,
-          band: 14,
-          qoldiq: 7
-        }
-      ]
+      key: `7761`,
+      name: `Arxiv`
     },
     {
-      key: `14`,
-      name: `Axborot resurs markazi`,
-      shtat: 32,
-      band: 25,
-      qoldiq: 7,
-      children: [
-        {
-          key: `42`,
-          name: `Xodim`,
-          shtat: 23,
-          band: 14,
-          qoldiq: 7
-        }
-      ]
+      key: `77661`,
+      name: `Kadrlar bo'limi`
     }
-  ]
+  ],
+  loading: false,
+  error: null
 };
-
-function addInline(parentObj, newObj){
-  return parentObj.children = newObj
-}
-
-function findProp(obj, query, func) {
-  var state = { ...obj };
-  console.log(state);
-  for (let key in obj) {
-    let value = obj[key];
-    if (value["name"] !== query) {
-      if (value["children"] !== null) {
-        findProp(value["children"], query);
-      }
-    } else {
-      func.call(obj[key])
-    }
-  }
-  console.log(state);
-  return obj;
-}
 
 const bulimlarState = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case CREATE_BULIM:
+    case FETCH_BULIMLAR_START:
       return {
         ...state,
-        data: [
-          ...state.data,
-          //...findProp(state.data, "Arxiv"),
-          payload
-        ]
+        loading: true
       };
-
+    case FETCH_BULIMLAR_SUCCESS:
+      return {
+        ...state,
+        data: payload,
+        loading: false
+      };
+    case FETCH_BULIMLAR_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: payload
+      };
     default:
       return state;
   }
