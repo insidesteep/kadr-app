@@ -171,6 +171,8 @@ class EditableTable extends React.Component {
 
   isEditing = record => record.key === this.state.editingKey;
 
+  
+
   cancel = () => {
     this.setState({ editingKey: "" });
   };

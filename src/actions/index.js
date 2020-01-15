@@ -27,7 +27,10 @@ import {
   CREATE_BULIM,
   FETCH_BULIMLAR_START,
   FETCH_BULIMLAR_SUCCESS,
-  FETCH_BULIMLAR_FAILURE
+  FETCH_BULIMLAR_FAILURE,
+  FETCH_LAVOZIMLAR_START,
+  FETCH_LAVOZIMLAR_SUCCESS,
+  FETCH_LAVOZIMLAR_FAILURE
 } from "../constants";
 
 import axios from "axios";
@@ -262,6 +265,29 @@ export function fetchBulimlar() {
       .catch(function (err) {
         dispatch({
           type: FETCH_BULIMLAR_FAILURE
+        });
+        console.log("ERROR");
+      });
+  };
+}
+
+export function fetchLavozimlar() {
+  return dispatch => {
+
+    dispatch({
+      type: FETCH_LAVOZIMLAR_START
+    });
+    axios
+      .get("file_upload_parser.php")
+      .then(function (res) {
+        dispatch({
+          type: FETCH_LAVOZIMLAR_SUCCESS
+        });
+        console.log("SEND");
+      })
+      .catch(function (err) {
+        dispatch({
+          type: FETCH_LAVOZIMLAR_FAILURE
         });
         console.log("ERROR");
       });

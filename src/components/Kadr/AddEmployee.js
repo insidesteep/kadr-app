@@ -45,7 +45,7 @@ class AddEmployee extends React.Component {
             <Menu.Item />
             <Button primary onClick={this.showDrawer}>
               <Icon name="plus" />
-              Yangi xodim q'shish
+              Yangi xodim qo'shish
             </Button>
           </Menu.Menu>
         </Menu>

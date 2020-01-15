@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PassportInfo from '../../Containers/PassportInfo'
 import CommonInfo from './UserInfo/CommonInfo'
-import Xodimlar from '../Kadr/Xodimlar'
+import Xodimlar from '../../Containers/Xodimlar'
 import 'antd/dist/antd.css'
 
 class MainPanel extends Component {

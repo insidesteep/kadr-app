@@ -42,7 +42,7 @@ export const SET_UPLOAD_PROGRESS = "SET_UPLOAD_PROGRESS"
 
 
 
-                                    /* CONTEXT_MENU TYPES */
+                                    /* BULIMLAR TYPES */
 export const SHOW_MODAL = "SHOW_MODAL"
 export const HIDE_MODAL = "HIDE_MODAL"
 export const CREATE_BULIM = "CREATE_BULIM"
@@ -51,3 +51,8 @@ export const FETCH_BULIMLAR_START = "FETCH_BULIMLAR_START"
 export const FETCH_BULIMLAR_SUCCESS = "FETCH_BULIMLAR_SUCCESS"
 export const FETCH_BULIMLAR_FAILURE = "FETCH_BULIMLAR_FAILURE"
                             
+
+                                    /* LAVOZIMLAR TYPES */
+export const FETCH_LAVOZIMLAR_START = "FETCH_LAVOZIMLAR_START"
+export const FETCH_LAVOZIMLAR_SUCCESS = "FETCH_LAVOZIMLAR_SUCCESS"
+export const FETCH_LAVOZIMLAR_FAILURE = "FETCH_LAVOZIMLAR_FAILURE"
