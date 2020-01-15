@@ -18,45 +18,25 @@ function getBase64(img, callback) {
 function beforeUpload(file) {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
   if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
+    message.error("Faqat JPG/PNG formatdagi fayl yuklashingiz mumkin!");
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
+    message.error("Rasm 2MB'dan kichik bo'lishi kerak!");
   }
   return isJpgOrPng && isLt2M;
 }
 
 class Avatar extends React.Component {
-  state = {
-    loading: false
-  };
-
-  handleChange = info => {
-    if (info.file.status === "uploading") {
-      this.setState({ loading: true });
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>
-        this.setState({
-          imageUrl,
-          loading: false
-        })
-      );
-    }
-  };
 
   render() {
     const uploadButton = (
       <div>
-        <Icon type={this.state.loading ? "loading" : "file-image"} />
+        <Icon type={this.props.loading ? "loading" : "file-image"} />
         <div className="ant-upload-text">Rasmni yuklang</div>
       </div>
     );
-    const { imageUrl } = this.state;
-    console.log(imageUrl)
+
     return (
       <StyledUpload
         name="avatar"
@@ -65,13 +45,13 @@ class Avatar extends React.Component {
         showUploadList={false}
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
-        onChange={this.handleChange}
+        onChange={this.props.onChange}
       >
-        {imageUrl ? (
-          <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+        {this.props.file ? (
+          <img src={this.props.file} alt="avatar" style={{ width: "100%" }} />
         ) : (
-          uploadButton
-        )}
+            uploadButton
+          )}
       </StyledUpload>
     );
   }
