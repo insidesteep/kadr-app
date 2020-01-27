@@ -6,6 +6,7 @@ import books from './books'
 import contextMenu from './contextMenu'
 import bulimlar from './bulimlar'
 import lavozimlar from './lavozimlar'
+import xodimlar from './xodimlar'
 
 const initialState = {
     isMinimize: false,
@@ -93,7 +94,8 @@ const bsmi_app = combineReducers({
     books,
     contextMenu,
     bulimlar,
-    lavozimlar
+    lavozimlar,
+    xodimlar
 })
 
 export default bsmi_app

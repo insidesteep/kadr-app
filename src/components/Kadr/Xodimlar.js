@@ -4,7 +4,7 @@ import { Table, Button } from "antd";
 import CreateEmployee from "./CreateEmployee";
 import ExtraModal from "./ExtraModal";
 
-const Xodimlar = () => {
+const Xodimlar = ({ xodimlar }) => {
   const columns = [
     {
       title: "#",
@@ -136,37 +136,37 @@ const Xodimlar = () => {
       sorter: (a, b) => a.inn - b.inn
     },
     {
-      title: "INPS",
-      dataIndex: "inps",
-      key: "inps",
+      title: "JSHIR",
+      dataIndex: "pinfl",
+      key: "pinfl",
       width: 150,
       sorter: (a, b) => a.inps - b.inps
     }
   ];
 
-  const data = [
-    {
-      key: 1,
-      hash: 1,
-      name: "Ergashev Zohid",
-      bulim: "Axborot texnologiyalari",
-      lavozim: "Tizmim administratori",
-      malumot: "Oliy",
-      jins: "Erkak",
-      millat: "O'zbek",
-      birthDay: "01.01.1991",
-      passport: "AA 2314569",
-      id: "2556fsd6as7a34",
-      email: "mail@gamil.com",
-      phone: "+998916215896",
-      ilmDaraja: "yo'q",
-      ilmUnvon: "yo'q",
-      razryad: 7,
-      address: "Buxoro viloyati. Buxoro tumani. Losha Q.F.Y 56-uy",
-      inn: "12345678",
-      inps: "12345678912345"
-    }
-  ];
+  // const data = [
+  //   {
+  //     key: 1,
+  //     hash: 1,
+  //     name: "Ergashev Zohid",
+  //     bulim: "Axborot texnologiyalari",
+  //     lavozim: "Tizmim administratori",
+  //     malumot: "Oliy",
+  //     jins: "Erkak",
+  //     millat: "O'zbek",
+  //     birthDay: "01.01.1991",
+  //     passport: "AA 2314569",
+  //     id: "2556fsd6as7a34",
+  //     email: "mail@gamil.com",
+  //     phone: "+998916215896",
+  //     ilmDaraja: "yo'q",
+  //     ilmUnvon: "yo'q",
+  //     razryad: 7,
+  //     address: "Buxoro viloyati. Buxoro tumani. Losha Q.F.Y 56-uy",
+  //     inn: "12345678",
+  //     pinfl: "12345678912345"
+  //   }
+  // ];
 
   const [visible, setVisible] = useState(false)
   const [visibleExtra, setVisibleExtra] = useState(false)
@@ -175,7 +175,7 @@ const Xodimlar = () => {
   const closeModal = () => setVisible(false)
   const openExtraModal = () => setVisibleExtra(true)
   const closeExtraModal = () => setVisibleExtra(false)
-
+  console.log("PROPS: ", xodimlar)
   return (
     <div className="card" style={{ padding: "50px" }}>
       <Header>
@@ -184,7 +184,7 @@ const Xodimlar = () => {
       </Header>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={xodimlar}
         scroll={{ x: 1500, y: 300 }}
         locale={{ filterReset: "Сброс" }}
       />

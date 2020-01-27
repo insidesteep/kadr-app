@@ -37,14 +37,24 @@ const CreateEmployee = ({
   const [pinfl, setPinfl] = useState("");
   const [xissa, setXissa] = useState(0);
   const [photo, setPhoto] = useState(null);
-  const [passport, setPassport] = useState("");
+  const [passportSeria, setPassportSeria] = useState({
+    value: "",
+    validateStatus: "",
+    help: ""
+  });
+  const [passportNumber, setPassportNumber] = useState({
+    value: "",
+    validateStatus: "",
+    help: ""
+  });
   const [lastname, setLastname] = useState("");
   const [name, setName] = useState("");
   const [patronymic, setPatronymic] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isCitizen, setCitizen] = useState(false);
-  const [jins, setJins] = useState(0);
+  const [jins, setJins] = useState(1);
+  const [familyState, setFamilyState] = useState(1);
 
   const [loadingFile, setLoadingFile] = useState(false);
   const [file, setFile] = useState(null);
@@ -53,6 +63,7 @@ const CreateEmployee = ({
 
   const changeHolat = e => setHolat(e.target.value);
   const changeJins = e => setJins(e.target.value);
+  const changeFamilyState = e => setFamilyState(e.target.value);
   const changeBulim = value => setBulim(value);
   const save = () => {
     setVisible(false);
@@ -62,6 +73,90 @@ const CreateEmployee = ({
   const closeModal = () => {
     handleCancel();
     Modal.destroyAll();
+  };
+
+  const pinflValidator = (rule, value, callback) => {
+    if(value === "a") return callback()
+    if (!value) return callback();
+    if (value && value.length === 14) return callback();
+    callback("Son 14ta bo'lishi kerak");
+  };
+
+  const stirValidator = (rule, value, callback) => {
+    console.log("STIR");
+    if (!value) callback();
+    if (value && value.length === 9) callback();
+    callback("Son 9ta bo'lishi kerak");
+  };
+
+  const handleChangeSeria = e => {
+    if (e.target.value.length > 2) {
+      return;
+    }
+
+    if (e.target.value === "") {
+      setPassportSeria({
+        ...passportSeria,
+        value: e.target.value,
+        validateStatus: "error",
+        help: "Pasport seriyani kiriting"
+      });
+
+      return;
+    }
+
+    if (/[a-zA-Z]$/.test(e.target.value)) {
+      if (e.target.value.length < 2) {
+        setPassportSeria({
+          ...passportSeria,
+          value: e.target.value.toUpperCase(),
+          validateStatus: "error",
+          help: "2ta harf bo'lishi kerak"
+        });
+        return;
+      }
+      setPassportSeria({
+        ...passportSeria,
+        value: e.target.value.toUpperCase(),
+        validateStatus: "",
+        help: ""
+      });
+    } else {
+      setPassportSeria({ ...passportSeria });
+    }
+  };
+
+  const handleChangeNum = e => {
+    if (e.target.value === "") {
+      setPassportNumber({
+        ...passportNumber,
+        value: e.target.value,
+        validateStatus: "error",
+        help: "Pasport raqamini kiriting"
+      });
+
+      return;
+    }
+    if (isFinite(e.target.value)) {
+      if (e.target.value.length < 7) {
+        setPassportNumber({
+          ...passportNumber,
+          value: e.target.value.toUpperCase(),
+          validateStatus: "error",
+          help: "7ta raqam bo'lishi kerak"
+        });
+        return;
+      }
+
+      setPassportNumber({
+        ...passportNumber,
+        value: e.target.value,
+        validateStatus: "",
+        help: ""
+      });
+    } else {
+      setPassportNumber({ ...passportNumber });
+    }
   };
 
   const renderOilaviyAhvoli = () => {
@@ -80,6 +175,19 @@ const CreateEmployee = ({
         <Radio value={2}>Turmushga chiqmagan</Radio>
       </>
     );
+  };
+
+  function disabledDateB(current) {
+    let customDate = form.getFieldValue("bSana");
+    return current && current < moment(customDate, "YYYY-MM-DD");
+  }
+
+  function disabledDateA(current) {
+    let customDate = form.getFieldValue("aSana");
+    return current && current > moment(customDate, "YYYY-MM-DD");
+  }
+  const handlePinflChange = e => {
+    console.log("PINFLCHANGE", e.target.value)
   };
 
   const renderAsosiy = () => (
@@ -108,47 +216,62 @@ const CreateEmployee = ({
                 <Col span={12}>
                   <Row>
                     <Col>
-                      <Form.Item label="Pasport seriyasi">
-                        {getFieldDecorator("pSeria", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Pasport seriyasi kiritilmagan"
-                            }
-                          ]
-                        })(
-                          <Input
-                            placeholder="AA"
-                            style={{ width: "25%", marginRight: "2%" }}
-                          />
-                        )}
-                        {getFieldDecorator("pNumber", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Pasport raqami kiritilmagan"
-                            }
-                          ]
-                        })(
-                          <Input
-                            placeholder="1234567"
-                            style={{ width: "73%" }}
-                          />
-                        )}
+                      <Form.Item
+                        label="Pasport seriyasi"
+                        className="ant-form-item-required"
+                        help={passportSeria.help || passportNumber.help}
+                      >
+                        <Input
+                          placeholder="AA"
+                          style={{
+                            width: "25%",
+                            marginRight: "2%",
+                            borderColor:
+                              passportSeria.validateStatus === "error"
+                                ? "red"
+                                : ""
+                          }}
+                          value={passportSeria.value}
+                          maxLength={2}
+                          onChange={handleChangeSeria}
+                        />
+                        <Input
+                          placeholder="1234567"
+                          style={{
+                            width: "73%",
+                            borderColor:
+                              passportNumber.validateStatus === "error"
+                                ? "red"
+                                : ""
+                          }}
+                          value={passportNumber.value}
+                          maxLength={7}
+                          onChange={handleChangeNum}
+                        />
                       </Form.Item>
                     </Col>
                     <Col>
                       <Form.Item label="Berilgan sana">
                         {getFieldDecorator("bSana", {
                           rules: [{ required: true, message: "Sanani tanlang" }]
-                        })(<DatePicker locale={locale} />)}
+                        })(
+                          <DatePicker
+                            locale={locale}
+                            disabledDate={disabledDateA}
+                          />
+                        )}
                       </Form.Item>
                     </Col>
                     <Col>
                       <Form.Item label="Amal qilish muddati">
                         {getFieldDecorator("aSana", {
                           rules: [{ required: true, message: "Sanani tanlang" }]
-                        })(<DatePicker locale={locale} />)}
+                        })(
+                          <DatePicker
+                            locale={locale}
+                            disabledDate={disabledDateB}
+                          />
+                        )}
                       </Form.Item>
                     </Col>
                   </Row>
@@ -187,7 +310,8 @@ const CreateEmployee = ({
         <Col span={6}>
           <Form.Item label="Jinsi">
             {getFieldDecorator("jinsi", {
-              rules: [{ required: true, message: "Holatni tanlang" }]
+              rules: [{ required: true, message: "Holatni tanlang" }],
+              initialValue: jins
             })(
               <Radio.Group onChange={changeJins} value={jins}>
                 <Radio value={1}>Erkak</Radio>
@@ -199,10 +323,11 @@ const CreateEmployee = ({
         <Col span={8}>
           <Form.Item label="Oilaviy ahvoli">
             {getFieldDecorator("oilaAhvol", {
-              rules: [{ required: true, message: "Holatni tanlang" }]
+              rules: [{ required: true, message: "Holatni tanlang" }],
+              initialValue: familyState
             })(
-              <Radio.Group onChange={changeHolat} value={holatValue}>
-                { renderOilaviyAhvoli() }
+              <Radio.Group onChange={changeFamilyState} value={familyState}>
+                {renderOilaviyAhvoli()}
               </Radio.Group>
             )}
           </Form.Item>
@@ -235,10 +360,31 @@ const CreateEmployee = ({
     e.preventDefault();
     form.validateFields((err, values) => {
       console.log("VALUES", values);
-      if (!err) {
+      if (!passportSeria.value) {
+        setPassportSeria({
+          ...passportSeria,
+          validateStatus: "error",
+          help: "Pasport seriyani kiriting"
+        });
+      }
+      if (!passportNumber.value) {
+        setPassportNumber({
+          ...passportNumber,
+          validateStatus: "error",
+          help: "Pasport raqamini kiriting"
+        });
+      }
+      if (
+        !err &&
+        passportSeria.value &&
+        passportSeria.validateStatus !== "error" &&
+        passportNumber.value &&
+        passportNumber.validateStatus !== "error"
+      ) {
         save();
         console.log("Received values of form: ", values);
       }
+      console.log("ERROR", err);
     });
   };
 
@@ -306,15 +452,21 @@ const CreateEmployee = ({
               <Col span="16">
                 <Form.Item label="JSHSHIR">
                   {getFieldDecorator("pinfl", {
-                    rules: [{ required: true, message: "JSHSHIRni kiriitng" }]
-                  })(<Input.Search loading maxLength={14} />)}
+                    rules: [
+                      { required: true, message: "JSHSHIRni kiriitng" },
+                      { validator: pinflValidator }
+                    ]
+                  })(<Input.Search loading maxLength={14} onChange={handlePinflChange} />)}
                 </Form.Item>
               </Col>
               <Col span="8">
                 <Form.Item label="STIR">
                   {getFieldDecorator("inn", {
-                    rules: [{ required: true, message: "JSHSHIRni kiriitng" }]
-                  })(<Input.Search loading maxLength={14} />)}
+                    rules: [
+                      { required: true, message: "JSHSHIRni kiriitng" },
+                      { validator: stirValidator }
+                    ]
+                  })(<Input.Search loading maxLength={9} />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -341,7 +493,8 @@ const CreateEmployee = ({
           <Col span={14}>
             <Form.Item label="Holati">
               {getFieldDecorator("holat", {
-                rules: [{ required: true, message: "Holatni tanlang" }]
+                rules: [{ required: true, message: "Holatni tanlang" }],
+                initialValue: holatValue
               })(
                 <Radio.Group onChange={changeHolat} value={holatValue}>
                   <Radio value={1}>Asosiy</Radio>
@@ -375,11 +528,11 @@ const CreateEmployee = ({
                   )}
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col>
                 <Form.Item label="Xissa">
                   {getFieldDecorator("xissa", {
                     rules: [{ required: true, message: "Xissani kiriting" }]
-                  })(<InputNumber />)}
+                  })(<InputNumber step={0.25} min={0.25} max={1.5} />)}
                 </Form.Item>
               </Col>
             </Row>

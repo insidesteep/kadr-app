@@ -32,7 +32,7 @@ export default {
   "timePickerLocale": {
     "placeholder": "Vaqtni tanlang"
   },
-  "dateFormat": "YYYY-MM-DD",
+  "dateFormat": "DD.MM.YYYY",
   "dateTimeFormat": "YYYY-MM-DD HH:mm:ss",
   "weekFormat": "YYYY-wo",
   "monthFormat": "YYYY-MM"
