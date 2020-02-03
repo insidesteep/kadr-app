@@ -131,6 +131,7 @@ const initialState = {
 
 const xodimlarState = (state = initialState, action) => {
   const { type, payload } = action;
+  console.log("NEW_XODIM", type, state);
   switch (type) {
     case FETCH_XODIMLAR_START:
       return {
@@ -169,11 +170,22 @@ const xodimlarState = (state = initialState, action) => {
       };
 
     case ADD_XODIM_START:
-      return {};
+      return {
+        ...state,
+        loading: true
+      };
     case ADD_XODIM_SUCCESS:
-      return {};
+      return {
+        ...state,
+        data: [...this.data, payload.data],
+        loading: false
+      };
     case ADD_XODIM_FAILURE:
-      return {};
+      return {
+        ...state,
+        loading: false,
+        error: payload.error
+      };
     default:
       return state;
   }

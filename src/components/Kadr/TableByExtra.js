@@ -29,16 +29,14 @@ for (let i = 0; i < 5; i++) {
 const EditableContext = React.createContext();
 
 class EditableCell extends React.Component {
-
-
   changeDate = (name, value, parent) => {
-    parent.setState({ [name]: value })
-    console.log("PARENT", parent.state)
-  }
+    parent.setState({ [name]: value });
+    console.log("PARENT", parent.state);
+  };
 
   getInput = (value, parent) => {
     console.log("EditableCelli", value);
-    switch (this.props.dataIndex) {
+    switch (this.props.type) {
       case "date":
         return (
           <>
@@ -52,19 +50,9 @@ class EditableCell extends React.Component {
             />
           </>
         );
-      case "dateEnd":
-        return (
-          <>
-            <DatePicker
-              defaultValue={moment(value, "DD.MM.YYYY")}
-              format="DD.MM.YYYY"
-              locale={locale}
-              onChange={(moment, value) =>
-                this.changeDate(this.props.dataIndex, value, parent)
-              }
-            />
-          </>
-        );
+      case "number":
+        return <InputNumber />;
+
       default:
         return <Input />;
     }
@@ -79,7 +67,7 @@ class EditableCell extends React.Component {
       editing,
       dataIndex,
       title,
-      inputType,
+      type,
       record,
       index,
       children,
@@ -101,15 +89,14 @@ class EditableCell extends React.Component {
             })(this.getInput(record[dataIndex], parent))}
           </Form.Item>
         ) : (
-            children
-          )}
+          children
+        )}
       </td>
     );
   };
 
   render() {
-
-    console.log("WWWWWWW", this.props)
+    console.log("WWWWWWW", this.props);
     return (
       <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>
     );
@@ -120,35 +107,42 @@ class EditableTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = { data, editingKey: "" };
-    this.columns = [
-      ...this.props.columns,
-      {
-        title: "Operatsiyalar",
-        dataIndex: "operation",
-        render: (text, record) => {
-          const { editingKey } = this.state;
-          const editable = this.isEditing(record);
-          return editable ? (
-            <span>
-              <EditableContext.Consumer>
-                {({ form }) => (
-                  <ButtonGroup>
-                    <Button
-                      type="primary"
-                      icon="save"
-                      onClick={() => this.save(form, record.key)}
-                    />
-                    <Popconfirm
-                      title="Bekor qilmoqchimisiz?"
-                      onConfirm={() => this.cancel(record.key)}
-                    >
-                      <Button type="danger" icon="close" />
-                    </Popconfirm>
-                  </ButtonGroup>
-                )}
-              </EditableContext.Consumer>
-            </span>
-          ) : (
+    this.columns = this.renderOptions();
+  }
+
+  renderOptions = () => {
+    if (this.props.editableRows) {
+      return [
+        ...this.props.columns,
+        {
+          title: "Operatsiyalar",
+          dataIndex: "operation",
+          render: (text, record) => {
+            const { editingKey } = this.state;
+            const editable = this.isEditing(record);
+            return editable ? (
+              <span>
+                <EditableContext.Consumer>
+                  {({ form }) => (
+                    <ButtonGroup>
+                      <Button
+                        type="primary"
+                        icon="save"
+                        onClick={() => this.save(form, record.key)}
+                      />
+                      <Popconfirm
+                        title="Bekor qilmoqchimisiz?"
+                        onConfirm={() => this.cancel(record.key)}
+                        cancelText="Yo'q"
+                        okText="Ha"
+                      >
+                        <Button type="danger" icon="close" />
+                      </Popconfirm>
+                    </ButtonGroup>
+                  )}
+                </EditableContext.Consumer>
+              </span>
+            ) : (
               <ButtonGroup>
                 <Button
                   icon="edit"
@@ -157,21 +151,29 @@ class EditableTable extends React.Component {
                 />
                 <Popconfirm
                   title="Ma'lumotni o'chirmoqchimisiz?"
-                  icon={<Icon type="exclamation-circle" style={{ color: "tomato" }}/>}
+                  icon={
+                    <Icon
+                      type="exclamation-circle"
+                      style={{ color: "tomato" }}
+                    />
+                  }
                   onConfirm={() => this.delete(record.key)}
+                  cancelText="Yo'q"
+                  okText="Ha"
                 >
-                  <Button icon="delete" type="danger"/>
+                  <Button icon="delete" type="danger" />
                 </Popconfirm>
               </ButtonGroup>
             );
+          }
         }
-      }
-    ];
-  }
+      ];
+    } else {
+      return [...this.props.columns];
+    }
+  };
 
   isEditing = record => record.key === this.state.editingKey;
-
-  
 
   cancel = () => {
     this.setState({ editingKey: "" });
@@ -193,9 +195,9 @@ class EditableTable extends React.Component {
     });
   };
 
-  delete(key){
-    const newData = this.state.data.filter((item) => item.key !== key)
-    this.setState({ data: newData })
+  delete(key) {
+    const newData = this.state.data.filter(item => item.key !== key);
+    this.setState({ data: newData });
   }
 
   save(form, key) {
@@ -244,6 +246,7 @@ class EditableTable extends React.Component {
         ...col,
         onCell: record => ({
           record,
+          type: col.type,
           dataIndex: col.dataIndex,
           title: col.title,
           editing: this.isEditing(record)
@@ -252,15 +255,16 @@ class EditableTable extends React.Component {
     });
 
     return (
-      //TODO: Передать state через провайдер
       <EditableContext.Provider value={{ form: this.props.form, parent: this }}>
-        <Button
-          onClick={this.handleAdd}
-          type="primary"
-          style={{ marginBottom: 16 }}
-        >
-          Yangi qator
-        </Button>
+        {this.props.addRow && (
+          <Button
+            onClick={this.handleAdd}
+            type="primary"
+            style={{ marginBottom: 16 }}
+          >
+            Yangi qator
+          </Button>
+        )}
         <Table
           components={components}
           bordered
@@ -275,6 +279,11 @@ class EditableTable extends React.Component {
     );
   }
 }
+
+EditableTable.defaultProps = {
+  addRow: true,
+  editableRows: true
+};
 
 const TableByExtra = Form.create()(EditableTable);
 

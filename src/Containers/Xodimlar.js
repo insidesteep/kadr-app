@@ -1,5 +1,5 @@
 import Xodimlar from "../components/Kadr/Xodimlar";
-import { fetchBulimlar } from "../actions";
+import { fetchBulimlar, createNewXodim, addXodim } from "../actions";
 import { connect } from "react-redux";
 
 const cleanXodimData = state => {
@@ -41,5 +41,5 @@ export default connect(
     loading: state.xodimlar.loading,
     error: state.xodimlar.error
   }),
-  fetchBulimlar
+  { fetchBulimlar, createNewXodim, addXodim }
 )(Xodimlar);

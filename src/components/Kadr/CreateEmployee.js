@@ -13,7 +13,8 @@ import {
   InputNumber,
   Button,
   Switch,
-  Tag
+  Tag,
+  Table
 } from "antd";
 import { Header } from "../../elements";
 import UploadAvatar from "./UploadAvatar";
@@ -76,7 +77,7 @@ const CreateEmployee = ({
   };
 
   const pinflValidator = (rule, value, callback) => {
-    if(value === "a") return callback()
+    if (value === "a") return callback();
     if (!value) return callback();
     if (value && value.length === 14) return callback();
     callback("Son 14ta bo'lishi kerak");
@@ -187,7 +188,7 @@ const CreateEmployee = ({
     return current && current > moment(customDate, "YYYY-MM-DD");
   }
   const handlePinflChange = e => {
-    console.log("PINFLCHANGE", e.target.value)
+    console.log("PINFLCHANGE", e.target.value);
   };
 
   const renderAsosiy = () => (
@@ -415,7 +416,8 @@ const CreateEmployee = ({
       visible={visible}
       onOk={save}
       onCancel={closeModal}
-      width="50%"
+      width="60%"
+      destroyOnClose
       footer={null}
     >
       <Form onSubmit={handleSubmit}>
@@ -456,7 +458,13 @@ const CreateEmployee = ({
                       { required: true, message: "JSHSHIRni kiriitng" },
                       { validator: pinflValidator }
                     ]
-                  })(<Input.Search loading maxLength={14} onChange={handlePinflChange} />)}
+                  })(
+                    <Input.Search
+                      loading
+                      maxLength={14}
+                      onChange={handlePinflChange}
+                    />
+                  )}
                 </Form.Item>
               </Col>
               <Col span="8">
@@ -491,18 +499,25 @@ const CreateEmployee = ({
         </Row>
         <Row gutter={24}>
           <Col span={14}>
-            <Form.Item label="Holati">
-              {getFieldDecorator("holat", {
-                rules: [{ required: true, message: "Holatni tanlang" }],
-                initialValue: holatValue
-              })(
-                <Radio.Group onChange={changeHolat} value={holatValue}>
-                  <Radio value={1}>Asosiy</Radio>
-                  <Radio value={2}>Tashqi o'rindosh</Radio>
-                  <Radio value={3}>Ichki o'rindosh</Radio>
-                </Radio.Group>
-              )}
-            </Form.Item>
+            <Row>
+              <Col>
+                <Form.Item label="Holati">
+                  {getFieldDecorator("holat", {
+                    rules: [{ required: true, message: "Holatni tanlang" }],
+                    initialValue: holatValue
+                  })(
+                    <Radio.Group onChange={changeHolat} value={holatValue}>
+                      <Radio value={1}>Asosiy</Radio>
+                      <Radio value={2}>Tashqi o'rindosh</Radio>
+                      <Radio value={3}>Ichki o'rindosh</Radio>
+                    </Radio.Group>
+                  )}
+                </Form.Item>  
+              </Col>
+              <Col>
+                  <Table size="small" culumns={{}} data={{}}/>
+              </Col>
+            </Row>
           </Col>
           <Col span={10}>
             <Row gutter={8}>

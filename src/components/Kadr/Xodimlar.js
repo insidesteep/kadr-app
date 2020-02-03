@@ -176,6 +176,8 @@ const Xodimlar = ({ xodimlar }) => {
   const openExtraModal = () => setVisibleExtra(true)
   const closeExtraModal = () => setVisibleExtra(false)
   console.log("PROPS: ", xodimlar)
+
+  
   return (
     <div className="card" style={{ padding: "50px" }}>
       <Header>
@@ -189,7 +191,7 @@ const Xodimlar = ({ xodimlar }) => {
         locale={{ filterReset: "Сброс" }}
       />
       <CreateEmployee visible={visible} handleCancel={closeModal} title="Yangi xodim yaratish" setVisible={setVisible} setVisibleExtra={setVisibleExtra} />
-      <ExtraModal visible={visibleExtra}/>
+      <ExtraModal visible={visibleExtra} handleCancel={closeExtraModal}/>
     </div>
   );
 };

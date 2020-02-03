@@ -30,7 +30,13 @@ import {
   FETCH_BULIMLAR_FAILURE,
   FETCH_LAVOZIMLAR_START,
   FETCH_LAVOZIMLAR_SUCCESS,
-  FETCH_LAVOZIMLAR_FAILURE
+  FETCH_LAVOZIMLAR_FAILURE,
+  CREATE_NEW_XODIM_START,
+  CREATE_NEW_XODIM_SUCCESS,
+  CREATE_NEW_XODIM_FAILURE,
+  ADD_XODIM_START,
+  ADD_XODIM_SUCCESS,
+  ADD_XODIM_FAILURE
 } from "../constants";
 
 import axios from "axios";
@@ -173,7 +179,7 @@ export function setUploadProgress(percent) {
 export function addBook(book) {
   return dispatch => {
     const config = {
-      onUploadProgress: function (progressEvent) {
+      onUploadProgress: function(progressEvent) {
         const percent = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total
         );
@@ -186,13 +192,13 @@ export function addBook(book) {
     });
     axios
       .post("file_upload_parser.php", book, config)
-      .then(function (res) {
+      .then(function(res) {
         dispatch({
           type: ADD_BOOK_SUCCESS
         });
         console.log("SEND");
       })
-      .catch(function (err) {
+      .catch(function(err) {
         dispatch({
           type: ADD_BOOK_FAILURE
         });
@@ -242,27 +248,25 @@ export function showModal(optionType) {
 export function hideModal() {
   return {
     type: HIDE_MODAL
-  }
+  };
 }
 
 let id = 562;
 
-
 export function fetchBulimlar() {
   return dispatch => {
-
     dispatch({
       type: FETCH_BULIMLAR_START
     });
     axios
       .get("file_upload_parser.php")
-      .then(function (res) {
+      .then(function(res) {
         dispatch({
           type: FETCH_BULIMLAR_SUCCESS
         });
         console.log("SEND");
       })
-      .catch(function (err) {
+      .catch(function(err) {
         dispatch({
           type: FETCH_BULIMLAR_FAILURE
         });
@@ -273,19 +277,18 @@ export function fetchBulimlar() {
 
 export function fetchLavozimlar() {
   return dispatch => {
-
     dispatch({
       type: FETCH_LAVOZIMLAR_START
     });
     axios
       .get("file_upload_parser.php")
-      .then(function (res) {
+      .then(function(res) {
         dispatch({
           type: FETCH_LAVOZIMLAR_SUCCESS
         });
         console.log("SEND");
       })
-      .catch(function (err) {
+      .catch(function(err) {
         dispatch({
           type: FETCH_LAVOZIMLAR_FAILURE
         });
@@ -295,7 +298,7 @@ export function fetchLavozimlar() {
 }
 
 export function createBulim(data) {
-  console.log("data", data)
+  console.log("data", data);
   return {
     type: CREATE_BULIM,
     payload: {
@@ -304,16 +307,75 @@ export function createBulim(data) {
       shtat: data.shtat,
       children: null
     }
-  }
+  };
 }
 
 export function createInlineBulim(bulim, inlineBulim) {
-
   return {
     type: CREATE_BULIM,
     payload: {
       bulim,
       inlineBulim
     }
-  }
+  };
+}
+
+/****************************************************************************************/
+/********************************** XODIMLAR ACTIONS ************************************/
+/****************************************************************************************/
+
+export function createNewXodim(data) {
+  return dispatch => {
+    dispatch({
+      type: CREATE_NEW_XODIM_START
+    });
+    axios
+      .post("http://")
+      .then(function(res) {
+        dispatch({
+          type: CREATE_NEW_XODIM_SUCCESS,
+          payload: {
+            data
+          }
+        });
+        console.log("SEND");
+      })
+      .catch(function(error) {
+        dispatch({
+          type: CREATE_NEW_XODIM_FAILURE,
+          payload: {
+            error
+          }
+        });
+        console.log("ERROR");
+      });
+  };
+}
+
+export function addXodim(data) {
+  return dispatch => {
+    dispatch({
+      type: ADD_XODIM_START
+    });
+    axios
+      .post("http://")
+      .then(function(res) {
+        dispatch({
+          type: ADD_XODIM_SUCCESS,
+          payload: {
+            data
+          }
+        });
+        console.log("SEND");
+      })
+      .catch(function(error) {
+        dispatch({
+          type: ADD_XODIM_FAILURE,
+          payload: {
+            error
+          }
+        });
+        console.log("ERROR");
+      });
+  };
 }
