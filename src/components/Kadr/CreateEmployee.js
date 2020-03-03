@@ -194,90 +194,70 @@ const CreateEmployee = ({
   const renderAsosiy = () => (
     <>
       <Row gutter={24}>
-        <Col span={14}>
+        <Col span={6}>
           <Row>
             <Col>
-              <Row gutter={24}>
-                <Col span={12}>
-                  <Row>
-                    <Form.Item label="Rasmi">
-                      {getFieldDecorator("rasm", {
-                        valuePropName: "fileList",
-                        rules: [{ required: true, message: "Rasmni yuklang" }]
-                      })(
-                        <UploadAvatar
-                          onChange={normFile}
-                          file={file}
-                          loading={loadingFile}
-                        />
-                      )}
-                    </Form.Item>
-                  </Row>
-                </Col>
-                <Col span={12}>
-                  <Row>
-                    <Col>
-                      <Form.Item
-                        label="Pasport seriyasi"
-                        className="ant-form-item-required"
-                        help={passportSeria.help || passportNumber.help}
-                      >
-                        <Input
-                          placeholder="AA"
-                          style={{
-                            width: "25%",
-                            marginRight: "2%",
-                            borderColor:
-                              passportSeria.validateStatus === "error"
-                                ? "red"
-                                : ""
-                          }}
-                          value={passportSeria.value}
-                          maxLength={2}
-                          onChange={handleChangeSeria}
-                        />
-                        <Input
-                          placeholder="1234567"
-                          style={{
-                            width: "73%",
-                            borderColor:
-                              passportNumber.validateStatus === "error"
-                                ? "red"
-                                : ""
-                          }}
-                          value={passportNumber.value}
-                          maxLength={7}
-                          onChange={handleChangeNum}
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col>
-                      <Form.Item label="Berilgan sana">
-                        {getFieldDecorator("bSana", {
-                          rules: [{ required: true, message: "Sanani tanlang" }]
-                        })(
-                          <DatePicker
-                            locale={locale}
-                            disabledDate={disabledDateA}
-                          />
-                        )}
-                      </Form.Item>
-                    </Col>
-                    <Col>
-                      <Form.Item label="Amal qilish muddati">
-                        {getFieldDecorator("aSana", {
-                          rules: [{ required: true, message: "Sanani tanlang" }]
-                        })(
-                          <DatePicker
-                            locale={locale}
-                            disabledDate={disabledDateB}
-                          />
-                        )}
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+              <Form.Item label="Rasmi">
+                {getFieldDecorator("rasm", {
+                  valuePropName: "fileList",
+                  rules: [{ required: true, message: "Rasmni yuklang" }]
+                })(
+                  <UploadAvatar
+                    onChange={normFile}
+                    file={file}
+                    loading={loadingFile}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
+        <Col span={8}>
+          <Row>
+            <Col>
+              <Form.Item
+                label="Pasport seriyasi"
+                className="ant-form-item-required"
+                help={passportSeria.help || passportNumber.help}
+              >
+                <Input
+                  placeholder="AA"
+                  style={{
+                    width: "25%",
+                    marginRight: "2%",
+                    borderColor:
+                      passportSeria.validateStatus === "error" ? "red" : ""
+                  }}
+                  value={passportSeria.value}
+                  maxLength={2}
+                  onChange={handleChangeSeria}
+                />
+                <Input
+                  placeholder="1234567"
+                  style={{
+                    width: "73%",
+                    borderColor:
+                      passportNumber.validateStatus === "error" ? "red" : ""
+                  }}
+                  value={passportNumber.value}
+                  maxLength={7}
+                  onChange={handleChangeNum}
+                />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Berilgan sana">
+                {getFieldDecorator("bSana", {
+                  rules: [{ required: true, message: "Sanani tanlang" }]
+                })(<DatePicker locale={locale} disabledDate={disabledDateA} />)}
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Amal qilish muddati">
+                {getFieldDecorator("aSana", {
+                  rules: [{ required: true, message: "Sanani tanlang" }]
+                })(<DatePicker locale={locale} disabledDate={disabledDateB} />)}
+              </Form.Item>
             </Col>
           </Row>
         </Col>
@@ -306,34 +286,45 @@ const CreateEmployee = ({
             </Col>
           </Row>
         </Col>
+        <Col>
+          <Row gutter={24}>
+            <Col span={6}>
+              <Form.Item label="Tug'ilgan sana">
+                {getFieldDecorator("birthDate", {
+                  rules: [{ required: true, message: "Sanani tanlang" }]
+                })(<DatePicker locale={locale} disabledDate={disabledDateA} />)}
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Jinsi">
+                {getFieldDecorator("jinsi", {
+                  rules: [{ required: true, message: "Holatni tanlang" }],
+                  initialValue: jins
+                })(
+                  <Radio.Group onChange={changeJins} value={jins}>
+                    <Radio value={1}>Erkak</Radio>
+                    <Radio value={2}>Ayol</Radio>
+                  </Radio.Group>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={10}>
+              <Form.Item label="Oilaviy ahvoli">
+                {getFieldDecorator("oilaAhvol", {
+                  rules: [{ required: true, message: "Holatni tanlang" }],
+                  initialValue: familyState
+                })(
+                  <Radio.Group onChange={changeFamilyState} value={familyState}>
+                    {renderOilaviyAhvoli()}
+                  </Radio.Group>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
       </Row>
       <Row gutter={24}>
         <Col span={6}>
-          <Form.Item label="Jinsi">
-            {getFieldDecorator("jinsi", {
-              rules: [{ required: true, message: "Holatni tanlang" }],
-              initialValue: jins
-            })(
-              <Radio.Group onChange={changeJins} value={jins}>
-                <Radio value={1}>Erkak</Radio>
-                <Radio value={2}>Ayol</Radio>
-              </Radio.Group>
-            )}
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item label="Oilaviy ahvoli">
-            {getFieldDecorator("oilaAhvol", {
-              rules: [{ required: true, message: "Holatni tanlang" }],
-              initialValue: familyState
-            })(
-              <Radio.Group onChange={changeFamilyState} value={familyState}>
-                {renderOilaviyAhvoli()}
-              </Radio.Group>
-            )}
-          </Form.Item>
-        </Col>
-        <Col span={10}>
           <Form.Item label="Millati">
             {getFieldDecorator("millat", {
               rules: [{ required: true, message: "Millati tanlanmagan!" }]
@@ -352,6 +343,151 @@ const CreateEmployee = ({
             )}
           </Form.Item>
         </Col>
+        <Col span={8}>
+          <Form.Item label="Telefon raqami">
+            {getFieldDecorator("phone", {
+              rules: [{ required: true, message: "Telefon raqamini kiriting!" }]
+            })(<Input />)}
+          </Form.Item>
+        </Col>
+        <Col span={10}>
+            <Form.Item label="Elektron manzili">
+              {getFieldDecorator("email", {
+                rules: [
+                  { required: true, message: "Elektron manzilni kiriting!" }
+                ]
+              })(<Input />)}
+            </Form.Item>
+        </Col>
+      </Row>
+      <Divider />
+      <Row gutter={24}>
+        <h4>Diplom ma'lumotlari</h4>
+        <Col span={8}>
+          <Row>
+            <Col>
+              <Form.Item label="Ma'lumoti">
+                {getFieldDecorator("malumoti", {
+                  rules: [{ required: true, message: "Ma'lumotini tanlang" }],
+                  initialValue: jins
+                })(
+                  <Select
+                    notFoundContent="Mavjud emas"
+                    showSearch
+                    placeholder="Millatini tanlang"
+                  ></Select>
+                )}
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Ilmiy darajasi">
+                {getFieldDecorator("ilmDaraja", {
+                  rules: [
+                    { required: true, message: "Ilmiy darajasini tanlang" }
+                  ],
+                  initialValue: jins
+                })(
+                  <Select
+                    notFoundContent="Mavjud emas"
+                    showSearch
+                    placeholder="Ilmiy darajani tanlang"
+                  ></Select>
+                )}
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Ilmiy unvoni">
+                {getFieldDecorator("ilmUnvon", {
+                  rules: [
+                    { required: true, message: "Ilmiy unvonini tanlang" }
+                  ],
+                  initialValue: jins
+                })(
+                  <Select
+                    notFoundContent="Mavjud emas"
+                    showSearch
+                    placeholder="Millatini tanlang"
+                  ></Select>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
+        <Col span={8}>
+          <Row>
+            <Col>
+              <Form.Item label="Diplom raqami">
+                {getFieldDecorator("diplomByMalumot", {
+                  rules: [
+                    { required: true, message: "Diplom raqamini kiriting" }
+                  ],
+                  initialValue: familyState
+                })(<Input />)}
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Atestatsiya raqami">
+                {getFieldDecorator("atestatsiyaByDaraja", {
+                  rules: [
+                    { required: true, message: "Atestatsiya raqamini kiriting" }
+                  ],
+                  initialValue: familyState
+                })(<Input />)}
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Diplom raqami">
+                {getFieldDecorator("diplomByUnvon", {
+                  rules: [{ required: true, message: "Holatni tanlang" }],
+                  initialValue: familyState
+                })(<Input />)}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
+        <Col span={8}>
+          <Row>
+            <Col>
+              <Form.Item label="Ta'lim muassasasi">
+                {getFieldDecorator("otm", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Ta'lim muassasasi nomini kiriting"
+                    }
+                  ],
+                  initialValue: familyState
+                })(<Input />)}
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Mutaxassisligi">
+                {getFieldDecorator("mutaxasisligi", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Mutaxasssisligini kiriting"
+                    }
+                  ],
+                  initialValue: familyState
+                })(<Input />)}
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Ixtisosligi">
+                {getFieldDecorator("ixtisosligi", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Ixtisosligini kiriting"
+                    }
+                  ],
+                  initialValue: familyState
+                })(<Input />)}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
       </Row>
     </>
   );
@@ -360,33 +496,39 @@ const CreateEmployee = ({
   const handleSubmit = e => {
     e.preventDefault();
     form.validateFields((err, values) => {
-      console.log("VALUES", values);
-      if (!passportSeria.value) {
-        setPassportSeria({
-          ...passportSeria,
-          validateStatus: "error",
-          help: "Pasport seriyani kiriting"
-        });
+      if (!err) {
+        //
+      } else {
+        alert(JSON.stringify(err));
       }
-      if (!passportNumber.value) {
-        setPassportNumber({
-          ...passportNumber,
-          validateStatus: "error",
-          help: "Pasport raqamini kiriting"
-        });
-      }
-      if (
-        !err &&
-        passportSeria.value &&
-        passportSeria.validateStatus !== "error" &&
-        passportNumber.value &&
-        passportNumber.validateStatus !== "error"
-      ) {
-        save();
-        console.log("Received values of form: ", values);
-      }
-      console.log("ERROR", err);
     });
+    // console.log("VALUES", values);
+    // if (!passportSeria.value) {
+    //   setPassportSeria({
+    //     ...passportSeria,
+    //     validateStatus: "error",
+    //     help: "Pasport seriyani kiriting"
+    //   });
+    // }
+    // if (!passportNumber.value) {
+    //   setPassportNumber({
+    //     ...passportNumber,
+    //     validateStatus: "error",
+    //     help: "Pasport raqamini kiriting"
+    //   });
+    // }
+    // if (
+    //   !err &&
+    //   passportSeria.value &&
+    //   passportSeria.validateStatus !== "error" &&
+    //   passportNumber.value &&
+    //   passportNumber.validateStatus !== "error"
+    // ) {
+    //   save();
+    //   console.log("Received values of form: ", values);
+    // }
+    // console.log("ERROR", err);
+    // });
   };
 
   const getBase64 = (img, callback) => {
@@ -451,22 +593,6 @@ const CreateEmployee = ({
           <Divider />
           <Col span={14}>
             <Row gutter={8}>
-              <Col span="16">
-                <Form.Item label="JSHSHIR">
-                  {getFieldDecorator("pinfl", {
-                    rules: [
-                      { required: true, message: "JSHSHIRni kiriitng" },
-                      { validator: pinflValidator }
-                    ]
-                  })(
-                    <Input.Search
-                      loading
-                      maxLength={14}
-                      onChange={handlePinflChange}
-                    />
-                  )}
-                </Form.Item>
-              </Col>
               <Col span="8">
                 <Form.Item label="STIR">
                   {getFieldDecorator("inn", {
@@ -475,6 +601,16 @@ const CreateEmployee = ({
                       { validator: stirValidator }
                     ]
                   })(<Input.Search loading maxLength={9} />)}
+                </Form.Item>
+              </Col>
+              <Col span="16">
+                <Form.Item label="JSHSHIR">
+                  {getFieldDecorator("pinfl", {
+                    rules: [
+                      { required: true, message: "JSHSHIRni kiriitng" },
+                      { validator: pinflValidator }
+                    ]
+                  })(<Input maxLength={14} onChange={handlePinflChange} />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -512,10 +648,10 @@ const CreateEmployee = ({
                       <Radio value={3}>Ichki o'rindosh</Radio>
                     </Radio.Group>
                   )}
-                </Form.Item>  
+                </Form.Item>
               </Col>
               <Col>
-                  <Table size="small" culumns={{}} data={{}}/>
+                <Table size="small" culumns={{}} data={{}} />
               </Col>
             </Row>
           </Col>

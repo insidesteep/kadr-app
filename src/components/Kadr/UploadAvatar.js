@@ -5,7 +5,7 @@ import styled from "styled-components";
 const StyledUpload = styled(Upload)`
   .ant-upload {
     width: 100% !important;
-    height: 240px !important
+    /* height: 17rem !important; */
   }
 `;
 

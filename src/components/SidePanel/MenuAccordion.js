@@ -68,25 +68,27 @@ const menuItemsCollection2 = [
   {
     id: 2,
     title: "Bo'limlar",
-    to: "/virtualtb"
+    to: "/bulimlar-shtat"
   },
   {
     id: 3,
     title: "Fakultetlar",
-    to: "/fakultetlar"
+    to: "/fakultetlar-shtat"
   },
   {
     id: 4,
-    title: "Kafedralar"
+    title: "Kafedralar",
+    to: "/kafedralar-shtat"
   },
   {
     id: 5,
-    title: "Labarant"
+    title: "Laborabtlar",
+    to: "/laborantlar-shtat"
   },
   {
     id: 6,
-    title: "Sozlamalar",
-    to: "/settings"
+    title: "Права доступа",
+    to: "/access-control"
   }
 ];
 

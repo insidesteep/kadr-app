@@ -20,7 +20,7 @@ const ExtraModal = ({ visible, handleCancel }) => {
   return (
     <Modal
       title="Qo'shimcha ma'lumotlar"
-      visible={visible}
+      visible={true}
       onCancel={handleCancel}
       width="90%"
       destroyOnClose
@@ -31,16 +31,6 @@ const ExtraModal = ({ visible, handleCancel }) => {
         tabPosition="left"
         size="small"
       >
-        <TabPane tab="Asosiy ma'lumotlar" key="1">
-          <h3>Asosiy ma'lumotlar</h3>
-          <Divider />
-          <TableByExtra columns={saylov} addRow={false} />
-        </TabPane>
-        <TabPane tab="Pasport ma'lumotlari" key="12">
-          <h3>Pasport ma'lumotlari</h3>
-          <Divider />
-          <TableByExtra columns={passport} />
-        </TabPane>
         <TabPane tab="Partiyaviyligi" key="2">
           <h3>Partiyaviyligi</h3>
           <Divider />
@@ -55,16 +45,6 @@ const ExtraModal = ({ visible, handleCancel }) => {
           <h3>Yaqin qarindoshlari</h3>
           <Divider />
           <TableByExtra columns={oila} />
-        </TabPane>
-        <TabPane tab="Mehnat ta'tili" key="5" addRow={false}>
-          <h3>Mehnat ta'tili</h3>
-          <Divider />
-          <TableByExtra columns={tatil} addRow={false} editableRows={false} />
-        </TabPane>
-        <TabPane tab="Ishga tayinlanish" key="6">
-          <h3>Ishga tayinlanishi</h3>
-          <Divider />
-          <TableByExtra columns={ish} addRow={false} editableRows={false} />
         </TabPane>
         <TabPane tab="Malaka oshirganligi" key="7">
           <h3>Malaka oshirganligi</h3>
